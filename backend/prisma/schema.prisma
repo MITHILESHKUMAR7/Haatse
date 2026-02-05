@@ -19,6 +19,12 @@ enum VerificationStatus {
   REJECTED
 }
 
+enum AuthProvider {
+  PHONE
+  EMAIL
+  GOOGLE
+}
+
 enum ListingStatus {
   OPEN
   PARTIALLY_LOCKED
@@ -64,7 +70,11 @@ enum RatingType {
 
 model User {
   id                 String              @id @default(cuid())
-  phoneNumber        String              @unique
+  phoneNumber        String?             @unique
+  email              String?             @unique
+  passwordHash       String?
+  googleId           String?             @unique
+  authProvider       AuthProvider        @default(PHONE)
   role               UserRole
   fullName           String
   districtId         String
